@@ -1,27 +1,18 @@
-const init = {
+const initState = {
   popular: [],
   newGames: [],
   upcoming: [],
   searched: [],
 };
 
-const gamesReducer = (state = init, action) => {
+const gamesReducer = (state = initState, action) => {
+  // console.log(action);
   switch (action.type) {
     case "FETCH_GAMES":
-      return { ...state };
-      break;
-
+      return { ...state, popular: action.payload.popular };
     default:
       return { ...state };
   }
-};
-
-// ACTION CREATOR EXAMPLE
-const fetchGames = (data) => {
-  return {
-    type: "FETCH_GAMES",
-    payload: data,
-  };
 };
 
 export default gamesReducer;
