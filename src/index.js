@@ -5,13 +5,19 @@ import reportWebVitals from "./reportWebVitals";
 
 // REDUX SETUP
 import rootReducer from "./reducers/index";
-import { createStore } from "redux";
+// Apply middleware is able to apply logic/functionality between each dispatch.
+// And compose allows as to apply multiple arguments as one.
+// https://stackoverflow.com/questions/69502147/changing-from-redux-to-redux-toolkit
+// import { createStore, applyMiddleware, compose } from "redux";
+// import thunk from "redux-thunk";
+// const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
+// CONFIGURE STORE
+import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-
-const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const store = configureStore({
+  reducer: rootReducer,
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
