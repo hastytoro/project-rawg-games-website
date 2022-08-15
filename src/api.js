@@ -26,10 +26,8 @@ const popular_games = `dates=${lastYear},${currentDate}&ordering=-rating&page_si
 const upcoming_games = `dates=${currentDate},${nextYear}&ordering=-added&page_size=10`;
 const new_games = `dates=${lastYear},${currentDate}&ordering=-released&page_size=10`;
 
-const popularGames = () => `${base_url}${category}?${apiKey}&${popular_games}`;
-const result = popularGames();
-
-console.log(result);
+export const popularGamesURL = () =>
+  `${base_url}${category}?${apiKey}&${popular_games}`;
 
 // //Getting the date
 // const getCurrentMonth = () => {
