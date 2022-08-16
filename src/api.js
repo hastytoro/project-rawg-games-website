@@ -1,8 +1,6 @@
-// require("dotenv").config();
-
 //Base URL
-const base_url = "https://api.rawg.io/api/";
 const category = "games";
+const base_url = `https://api.rawg.io/api/${category}`;
 const apiKey = `key=${process.env.REACT_APP_RAWG}`;
 
 // Get current date logic
@@ -14,20 +12,25 @@ const getDay = () => {
   const day = new Date().getDate();
   return day < 10 ? `0${day}` : day;
 };
-const currentYear = new Date().getFullYear();
-const currentMonth = getMonth();
-const currentDay = getDay();
-const currentDate = `${currentYear}-${currentMonth}-${currentDay}`;
-const lastYear = `${currentYear - 1}-${currentMonth}-${currentDay}`;
-const nextYear = `${currentYear + 1}-${currentMonth}-${currentDay}`;
+// current
+const year = new Date().getFullYear();
+const month = getMonth();
+const day = getDay();
+const currentDate = `${year}-${month}-${day}`;
+const lastYear = `${year - 1}-${month}-${day}`;
+const nextYear = `${year + 1}-${month}-${day}`;
 
 // Popular games url
-const popular_games = `dates=${lastYear},${currentDate}&ordering=-rating&page_size=10`;
-const upcoming_games = `dates=${currentDate},${nextYear}&ordering=-added&page_size=10`;
-const new_games = `dates=${lastYear},${currentDate}&ordering=-released&page_size=10`;
+const date = "dates";
+const ordering = "&ordering=-";
+const page = "&page_size=10";
+const popular = `${date}=${lastYear},${currentDate}${ordering}rating${page}`;
+const upcoming = `${date}=${currentDate},${nextYear}${ordering}added${page}`;
+const released = `${date}=${lastYear},${currentDate}${ordering}released${page}`;
 
-export const popularGamesURL = () =>
-  `${base_url}${category}?${apiKey}&${popular_games}`;
+export const popularGamesURL = () => `${base_url}?${apiKey}&${popular}`;
+export const releasedGamesURL = () => `${base_url}?${apiKey}&${released}`;
+export const upcomingGamesURL = () => `${base_url}?${apiKey}&${upcoming}`;
 
 // //Getting the date
 // const getCurrentMonth = () => {
@@ -58,7 +61,7 @@ export const popularGamesURL = () =>
 
 // //Popular Games
 // const popular_games = `games?dates=${lastYear},${currentDate}&ordering=-rating&page_size=10`;
-// const upcoming_games = `games?dates=${currentDate},${nextYear}&ordering=-added&page_size=10`;
+// const upcoming = `games?dates=${currentDate},${nextYear}&ordering=-added&page_size=10`;
 // const newGames = `games?dates=${lastYear},${currentDate}&ordering=-released&page_size=10`;
 
 // export const popularGamesURL = () => `${base_url}${popular_games}`;

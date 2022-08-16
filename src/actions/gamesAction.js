@@ -1,6 +1,6 @@
 // We fetch with axios for our action type 'FETCH_GAMES' and payload.
 import axios from "axios";
-import { popularGamesURL } from "../api";
+import { popularGamesURL, upcomingGamesURL, releasedGamesURL } from "../api";
 
 // Thunk action creators and thunk functions
 // https://redux.js.org/usage/writing-logic-thunks
@@ -28,13 +28,15 @@ import { popularGamesURL } from "../api";
 // the action creator, so they can be used in the logic:
 export function loadGames() {
   return async function loadGamesThunk(dispatch) {
-    const response = await axios.get(popularGamesURL());
-    let { data, status } = response;
+    const popular = await axios.get(popularGamesURL());
+    const upcoming = await axios.get(upcomingGamesURL());
+    const released = await axios.get(releasedGamesURL());
     dispatch({
       type: "FETCH_GAMES",
       payload: {
-        popular: data.results,
-        status: status,
+        popular: popular.data.results,
+        released: released.data.results,
+        upcoming: upcoming.data.results,
       },
     });
   };
