@@ -30,6 +30,32 @@ const Home = () => {
           />
         ))}
       </Games>
+
+      <h2>Popular games</h2>
+      <Games>
+        {popular.map((game) => (
+          <Game
+            key={game.id}
+            id={game.id}
+            name={game.name}
+            released={game.released}
+            image={game.background_image}
+          />
+        ))}
+      </Games>
+
+      <h2>New games</h2>
+      <Games>
+        {released.map((game) => (
+          <Game
+            key={game.id}
+            id={game.id}
+            name={game.name}
+            released={game.released}
+            image={game.background_image}
+          />
+        ))}
+      </Games>
     </GameList>
   );
 };
@@ -38,7 +64,8 @@ const GameList = styled(motion.div)`
   padding: 0rem 5rem;
   h2 {
     padding: 5rem 0rem;
-    background: #00000012; /* temp style to see redux state we destructure */
+    /* temp style to see redux state we destructure */
+    /* background: #00000012;  */
   }
 `;
 const Games = styled(motion.div)`
