@@ -1,15 +1,11 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { loadGames } from "./actions/gamesAction";
+import React from "react";
+import Home from "./pages/Home";
 
 function App() {
-  const dispatch = useDispatch(); // A hook to access redux dispatch function.
-  useEffect(() => {
-    dispatch(loadGames());
-  });
   return (
     <div>
-      <div>First Baby Steps</div>
+      <h1>RAWG+</h1>
+      <Home />
     </div>
   );
 }
