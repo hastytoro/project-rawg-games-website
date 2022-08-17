@@ -6,42 +6,46 @@ import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 
 const GameDetail = () => {
-  const { screen, game } = useSelector((state) => state.detail);
+  const { screen, game, isLoading } = useSelector((state) => state.detail);
   return (
-    // general card modal (popup)
-    <CardShadow>
-      <Detail>
-        <Stats>
-          <div className="rating">
-            <h3>{game.name}</h3>
-            <p>Rating: {game.rating}</p>
-          </div>
+    <>
+      {!isLoading && (
+        // general card modal (popup)
+        <CardShadow>
+          <Detail>
+            <Stats>
+              <div className="rating">
+                <h3>{game.name}</h3>
+                <p>Rating: {game.rating}</p>
+              </div>
 
-          <Info className="info">
-            <h3>Platforms</h3>
-            <Platforms>
-              {game.platforms.map((data) => (
-                <h3 key={data.platform.id}>{data.platform.name}</h3>
+              <Info className="info">
+                <h3>Platforms</h3>
+                <Platforms>
+                  {game.platforms.map((data) => (
+                    <h3 key={data.platform.id}>{data.platform.name}</h3>
+                  ))}
+                </Platforms>
+              </Info>
+            </Stats>
+
+            <Media>
+              <img src={game.background_image} alt="" />
+            </Media>
+
+            <Description>
+              <p>{game.description_raw}</p>
+            </Description>
+
+            <div className="gallery">
+              {screen.results.map((item) => (
+                <img src={item.image} key={item.id} alt="" />
               ))}
-            </Platforms>
-          </Info>
-        </Stats>
-
-        <Media>
-          <img src={game.background_image} alt="" />
-        </Media>
-
-        <Description>
-          <p>{game.description_raw}</p>
-        </Description>
-
-        <div className="gallery">
-          {screen.results.map((item) => (
-            <img src={item.image} key={item.id} alt="" />
-          ))}
-        </div>
-      </Detail>
-    </CardShadow>
+            </div>
+          </Detail>
+        </CardShadow>
+      )}
+    </>
   );
 };
 
