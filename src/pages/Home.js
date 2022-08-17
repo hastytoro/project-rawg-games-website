@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadGames } from "../actions/gamesAction";
 // Components
 import Game from "../components/Game";
+import GameDetail from "../components/GameDetail";
 // Styling and animation:
 import styled from "styled-components";
 import { motion } from "framer-motion";
@@ -13,25 +14,16 @@ const Home = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadGames());
-  }, [dispatch]); // ! remember the dependency array for mount-only
+  }, [dispatch]); // Remember the dependency array for mount-only
   // Get state data back from redux state
   const { popular, released, upcoming } = useSelector((state) => state.games);
   return (
     <GameList>
-      <h2>New Releases</h2>
-      <Games>
-        {released.map((game) => (
-          <Game
-            key={game.id}
-            id={game.id}
-            name={game.name}
-            released={game.released}
-            image={game.background_image}
-          />
-        ))}
-      </Games>
-
-      <h2>Upcoming</h2>
+      {/* Each individual game detail is rendered like a popup modal */}
+      {/* Conditional rendering required here so toggle component for now */}
+      {/* First manually select a Game component to load individual state */}
+      {/* <GameDetail /> */}
+      <h2>New & Upcoming</h2>
       <Games>
         {upcoming.map((game) => (
           <Game
@@ -43,7 +35,18 @@ const Home = () => {
           />
         ))}
       </Games>
-
+      <h2>Just Released</h2>
+      <Games>
+        {released.map((game) => (
+          <Game
+            key={game.id}
+            id={game.id}
+            name={game.name}
+            released={game.released}
+            image={game.background_image}
+          />
+        ))}
+      </Games>
       <h2>Popular & Trending</h2>
       <Games>
         {popular.map((game) => (
