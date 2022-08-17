@@ -10,8 +10,13 @@ import GameDetail from "../components/GameDetail";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
+import { useLocation } from "react-router-dom";
+
 const Home = () => {
-  const dispatch = useDispatch();
+  const location = useLocation(); // get current location
+  const pathId = location.pathname.split("/")[2];
+
+  const dispatch = useDispatch(); // fetch games
   useEffect(() => {
     dispatch(loadGames());
   }, [dispatch]); // Remember the dependency array for mount-only
@@ -22,7 +27,7 @@ const Home = () => {
       {/* Each individual game detail is rendered like a popup modal */}
       {/* Conditional rendering required here so toggle component for now */}
       {/* First manually select a Game component to load individual state */}
-      <GameDetail />
+      {pathId && <GameDetail />}
       <h2>New & Upcoming</h2>
       <Games>
         {upcoming.map((game) => (

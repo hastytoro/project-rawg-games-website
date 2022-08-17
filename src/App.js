@@ -1,8 +1,8 @@
 import React from "react";
 import Home from "./pages/Home";
-import GlobalStyle from "./components/GlobalStyle";
-
 import styled from "styled-components";
+import GlobalStyle from "./components/GlobalStyle";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
@@ -10,8 +10,12 @@ function App() {
       <NavTemp>
         <a href="/">RAWG+</a>
       </NavTemp>
+
       <GlobalStyle />
-      <Home />
+      <Routes>
+        <Route path={"/"} element={<Home />} />
+        <Route path={"/game/:id"} element={<Home />} />
+      </Routes>
     </div>
   );
 }
