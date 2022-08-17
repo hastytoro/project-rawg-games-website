@@ -8,6 +8,9 @@ import { loadDetail } from "../actions/detailAction";
 
 import { Link } from "react-router-dom";
 
+// Utility function takes image url and changes size when condition matches
+import { resizeImage } from "../utils";
+
 const Game = ({ id, name, released, image }) => {
   const dispatch = useDispatch();
 
@@ -22,7 +25,10 @@ const Game = ({ id, name, released, image }) => {
       <Link to={`/game/${id}`}>
         <h3>{name}</h3>
         <p>{released}</p>
-        <img src={image} alt={name} />
+        {/* DevTools Network tab hard reload = 8.5MB */}
+        {/* <img src={image} alt={name} /> */}
+        {/* DevTools Network tab hard reload = 1.2MB */}
+        <img src={resizeImage(image, 640)} alt={name} />
       </Link>
     </GameWrapper>
   );

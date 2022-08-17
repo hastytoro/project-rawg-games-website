@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 // This hook allows you to manipulate the browser url "path".
 import { useNavigate } from "react-router-dom";
 
+import { resizeImage } from "../utils";
+
 const GameDetail = () => {
   // Exit handling logic back to '/' home page path.
   const navigate = useNavigate();
@@ -42,7 +44,7 @@ const GameDetail = () => {
             </Stats>
 
             <Media>
-              <img src={game.background_image} alt="" />
+              <img src={resizeImage(game.background_image, 1280)} alt="" />
             </Media>
 
             <Description>
@@ -51,7 +53,7 @@ const GameDetail = () => {
 
             <div className="gallery">
               {screen.results.map((item) => (
-                <img src={item.image} key={item.id} alt="" />
+                <img src={resizeImage(item.image, 1280)} key={item.id} alt="" />
               ))}
             </div>
           </Detail>
