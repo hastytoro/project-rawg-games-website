@@ -59,6 +59,7 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
   img {
+    display: block;
     border: none;
     border-radius: 2px;
   }

@@ -5,13 +5,25 @@ import { motion } from "framer-motion";
 // REDUX
 import { useSelector } from "react-redux";
 
+// This hook allows you to manipulate the browser url "path".
+import { useNavigate } from "react-router-dom";
+
 const GameDetail = () => {
+  // Exit handling logic back to '/' home page path.
+  const navigate = useNavigate();
+  const exitDetailHandler = (e) => {
+    if (e.target.classList.contains("wrapper")) {
+      /* switches the body's overflow back to defaults */
+      document.body.style.overflow = "auto";
+      navigate("/");
+    }
+  };
   const { screen, game, isLoading } = useSelector((state) => state.detail);
   return (
     <>
       {!isLoading && (
         // general card modal (popup)
-        <CardShadow>
+        <CardWrapper onClick={exitDetailHandler} className="wrapper">
           <Detail>
             <Stats>
               <div className="rating">
@@ -43,13 +55,13 @@ const GameDetail = () => {
               ))}
             </div>
           </Detail>
-        </CardShadow>
+        </CardWrapper>
       )}
     </>
   );
 };
 
-const CardShadow = styled(motion.div)`
+const CardWrapper = styled(motion.div)`
   position: fixed;
   top: 0;
   left: 0;

@@ -10,9 +10,13 @@ import { Link } from "react-router-dom";
 
 const Game = ({ id, name, released, image }) => {
   const dispatch = useDispatch();
+
   const loadDetailHandler = () => {
+    /* prevents body from overflowing when modal popup loads */
+    document.body.style.overflow = "hidden";
     dispatch(loadDetail(id));
   };
+
   return (
     <GameWrapper onClick={loadDetailHandler}>
       <Link to={`/game/${id}`}>
@@ -32,7 +36,7 @@ const GameWrapper = styled(motion.div)`
   border-radius: 1rem;
   /* border-radius: 0.5rem; */
   cursor: pointer;
-  overflow: hidden;
+  overflow: hidden; /* for image overflow */
   img {
     display: block;
     width: 100%;
