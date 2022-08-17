@@ -22,7 +22,7 @@ const Home = () => {
       {/* Each individual game detail is rendered like a popup modal */}
       {/* Conditional rendering required here so toggle component for now */}
       {/* First manually select a Game component to load individual state */}
-      {/* <GameDetail /> */}
+      <GameDetail />
       <h2>New & Upcoming</h2>
       <Games>
         {upcoming.map((game) => (

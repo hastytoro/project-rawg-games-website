@@ -33,8 +33,6 @@ const GameWrapper = styled(motion.div)`
     width: 100%;
     /* height: 40vh; */
     height: 35vh;
-    border: none;
-    border-radius: 2px;
     object-fit: cover;
   }
 `;
