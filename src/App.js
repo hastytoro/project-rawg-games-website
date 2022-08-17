@@ -8,7 +8,7 @@ function App() {
   return (
     <div>
       <NavTemp>
-        <a>RAWG+</a>
+        <a href="/">RAWG+</a>
       </NavTemp>
       <GlobalStyle />
       <Home />

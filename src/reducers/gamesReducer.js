@@ -1,3 +1,4 @@
+// You always require initial state.
 const initState = {
   popular: [],
   released: [],
@@ -16,7 +17,7 @@ const gamesReducer = (state = initState, action) => {
         upcoming: action.payload.upcoming,
       };
     default:
-      return { ...state };
+      return { ...state }; // return whatever is in state if nothing works out.
   }
 };
 
