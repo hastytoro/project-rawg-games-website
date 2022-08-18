@@ -35,5 +35,4 @@ export const upcomingUrl = () => `${base_url}?${apiKey}&${upcoming}`;
 export const detailUrl = (id) => `${base_url}/${id}?${apiKey}`;
 export const screenshotUrl = (id) => `${base_url}/${id}/screenshots?${apiKey}`;
 // needs testing
-export const searchGameURL = (name) =>
-  `${base_url}?search=${name}?${apiKey}&page_size=9`;
+export const searchURL = (name) => `${base_url}?${apiKey}&search=${name}`;

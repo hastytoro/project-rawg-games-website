@@ -46,8 +46,8 @@ const Game = ({ id, name, released, image }) => {
 
 const GameWrapper = styled(motion.div)`
   min-height: 30vh;
-  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
-  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+  /* box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2); */
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   text-align: center;
   border-radius: 1rem;
   /* border-radius: 0.5rem; */

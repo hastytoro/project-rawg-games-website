@@ -1,6 +1,6 @@
 // We fetch with axios for our action type 'FETCH_GAMES' and payload.
 import axios from "axios";
-import { popularUrl, upcomingUrl, releasedUrl } from "../api";
+import { popularUrl, upcomingUrl, releasedUrl, searchURL } from "../api";
 
 // * Thunk action creators and thunk functions
 // https://redux.js.org/usage/writing-logic-thunks
@@ -37,6 +37,19 @@ export function loadGames() {
         popular: popular.data.results,
         released: released.data.results,
         upcoming: upcoming.data.results,
+      },
+    });
+  };
+}
+
+export function searchGames(name) {
+  return async function searchGamesThunk(dispatch) {
+    const search = await axios.get(searchURL(name));
+    // console.log(search); // testing your search dispatch
+    dispatch({
+      type: "FETCH_SEARCHED",
+      payload: {
+        searched: search.data.results,
       },
     });
   };

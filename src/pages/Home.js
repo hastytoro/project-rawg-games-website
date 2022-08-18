@@ -38,7 +38,9 @@ const Home = () => {
   }, [dispatch]); // Remember the dependency array for mount-only
 
   // Get state data back from redux state
-  const { popular, released, upcoming } = useSelector((state) => state.games);
+  const { popular, released, upcoming, searched } = useSelector(
+    (state) => state.games
+  );
 
   return (
     <GameList>
@@ -47,6 +49,22 @@ const Home = () => {
           {/* if pathId is true we render/run the right of the expression */}
           {pathId && <GameDetail pathId={pathId} />}
         </AnimatePresence>
+        {searched.length ? (
+          <div className="searched">
+            <h2>Searched</h2>
+            <Games>
+              {searched.map((game) => (
+                <Game
+                  key={game.id}
+                  id={game.id}
+                  name={game.name}
+                  released={game.released}
+                  image={game.background_image}
+                />
+              ))}
+            </Games>
+          </div>
+        ) : null}
 
         <h2>New & Upcoming</h2>
         <Games>
