@@ -12,6 +12,11 @@ import { Link } from "react-router-dom";
 // import { resizeImage } from "../utils";
 
 const Game = ({ id, name, released, image }) => {
+  // What is needed for components sharing the `layoutId`.
+  // Ensure that identifier is the same type.
+  // ! You will notice that they are not matching types.
+  // Convert one of them to either a string or number type.
+  // console.log("Game: id", typeof stringId, stringId);
   const stringId = id.toString();
   const dispatch = useDispatch();
 
@@ -20,12 +25,6 @@ const Game = ({ id, name, released, image }) => {
     document.body.style.overflow = "hidden";
     dispatch(loadDetail(id));
   };
-
-  // What is needed for components sharing the `layoutId`.
-  // Ensure that identifier is the same type.
-  // ! You will notice that they are not matching types.
-  // Convert one of them to either a string or number type.
-  console.log("Game: id", typeof stringId, stringId);
 
   return (
     <GameWrapper layoutId={stringId} onClick={loadDetailHandler}>
