@@ -6,9 +6,25 @@ import { loadGames } from "../actions/gamesAction";
 // Components
 import Game from "../components/Game";
 import GameDetail from "../components/GameDetail";
+
 // Styling and animation:
+// We transition between components and each of them have motion on them.
+// All styled components have `motion` included already.
+// `AnimatePresence` enables animation of components removed from the tree.
+// Below we wrap the component we transition towards being the individual card.
+// Important we apply/wrap `AnimatePresence` where we toggle between components.
+
+// Then with `AnimateSharedLayout` we wrap all components we wish to transition.
+// The component enables you to perform layout animations:
+// Across a set of components that don't otherwise share state.
+// Between different components that share a layoutId as they're added/removed.
+// For components to transition between each other they must share a identifier.
+// In the case below our <Game /> component already has an `game.id` prop.
+// Too enable shared layout transitions between different components, open Game,
+// and from the main `motion.div` likely, use the same `layoutId`.
+// Additionally our <GameDetail /> component makes use of the `pathId` prop.
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
 
 import { useLocation } from "react-router-dom";
 
@@ -20,50 +36,55 @@ const Home = () => {
   useEffect(() => {
     dispatch(loadGames());
   }, [dispatch]); // Remember the dependency array for mount-only
+
   // Get state data back from redux state
   const { popular, released, upcoming } = useSelector((state) => state.games);
+
   return (
     <GameList>
-      {/* Each individual game detail is rendered like a popup modal */}
-      {/* Conditional rendering required here so toggle component for now */}
-      {/* First manually select a Game component to load individual state */}
-      {pathId && <GameDetail />}
-      <h2>New & Upcoming</h2>
-      <Games>
-        {upcoming.map((game) => (
-          <Game
-            key={game.id}
-            id={game.id}
-            name={game.name}
-            released={game.released}
-            image={game.background_image}
-          />
-        ))}
-      </Games>
-      <h2>Just Released</h2>
-      <Games>
-        {released.map((game) => (
-          <Game
-            key={game.id}
-            id={game.id}
-            name={game.name}
-            released={game.released}
-            image={game.background_image}
-          />
-        ))}
-      </Games>
-      <h2>Popular & Trending</h2>
-      <Games>
-        {popular.map((game) => (
-          <Game
-            key={game.id}
-            id={game.id}
-            name={game.name}
-            released={game.released}
-            image={game.background_image}
-          />
-        ))}
-      </Games>
+      <AnimateSharedLayout type="crossfade">
+        <AnimatePresence>
+          {/* if pathId is true we render/run the right of the expression */}
+          {pathId && <GameDetail pathId={pathId} />}
+        </AnimatePresence>
+
+        <h2>New & Upcoming</h2>
+        <Games>
+          {upcoming.map((game) => (
+            <Game
+              key={game.id}
+              id={game.id}
+              name={game.name}
+              released={game.released}
+              image={game.background_image}
+            />
+          ))}
+        </Games>
+        <h2>Just Released</h2>
+        <Games>
+          {released.map((game) => (
+            <Game
+              key={game.id}
+              id={game.id}
+              name={game.name}
+              released={game.released}
+              image={game.background_image}
+            />
+          ))}
+        </Games>
+        <h2>Popular & Trending</h2>
+        <Games>
+          {popular.map((game) => (
+            <Game
+              key={game.id}
+              id={game.id}
+              name={game.name}
+              released={game.released}
+              image={game.background_image}
+            />
+          ))}
+        </Games>
+      </AnimateSharedLayout>
     </GameList>
   );
 };

@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 import { resizeImage } from "../utils";
 
-const GameDetail = () => {
+const GameDetail = ({ pathId }) => {
   // Exit handling logic back to '/' home page path.
   const navigate = useNavigate();
   const exitDetailHandler = (e) => {
@@ -20,16 +20,22 @@ const GameDetail = () => {
       navigate("/");
     }
   };
+
+  // What is needed for components sharing the `layoutId`.
+  // Ensure that identifier is the same type.
+  console.log(" GameDetail: pathId", typeof pathId, pathId);
+
+  // Get redux data:
   const { screen, game, isLoading } = useSelector((state) => state.detail);
   return (
     <>
       {!isLoading && (
         // general card modal (popup)
         <CardWrapper onClick={exitDetailHandler} className="wrapper">
-          <Detail>
+          <Detail layoutId={pathId}>
             <Stats>
               <div className="rating">
-                <h3>{game.name}</h3>
+                <motion.h3 layoutId={`title ${pathId}`}>{game.name}</motion.h3>
                 <p>Rating: {game.rating}</p>
               </div>
 
@@ -44,7 +50,11 @@ const GameDetail = () => {
             </Stats>
 
             <Media>
-              <img src={resizeImage(game.background_image, 1280)} alt="" />
+              <motion.img
+                layoutId={`image ${pathId}`}
+                src={resizeImage(game.background_image, 1280)}
+                alt={game.background_image}
+              />
             </Media>
 
             <Description>
@@ -53,7 +63,11 @@ const GameDetail = () => {
 
             <div className="gallery">
               {screen.results.map((item) => (
-                <img src={resizeImage(item.image, 1280)} key={item.id} alt="" />
+                <img
+                  src={resizeImage(item.image, 1280)}
+                  key={item.id}
+                  alt={item.image}
+                />
               ))}
             </div>
           </Detail>
@@ -68,10 +82,11 @@ const CardWrapper = styled(motion.div)`
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 5;
   min-height: 100vh;
   overflow-y: scroll; /* we have fixed position */
   background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
+  /* backdrop-filter: blur(2px); */
   &::-webkit-scrollbar {
     width: 0.5rem;
   }
@@ -92,8 +107,6 @@ const Detail = styled(motion.div)`
   color: black;
   img {
     width: 100%;
-    border: none;
-    border-radius: 2px;
   }
 `;
 
