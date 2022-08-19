@@ -41,12 +41,12 @@ const GlobalStyle = createGlobalStyle`
   h2 {
     /* font-family: 'IBM Plex Sans', sans-serif; */
     color: #333;
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: lighter;
   }
   h3 {
     color: #333;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     padding: 1.5rem 0rem;
   }
   p {

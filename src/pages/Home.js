@@ -6,7 +6,7 @@ import { loadGames } from "../actions/gamesAction";
 // Components
 import Game from "../components/Game";
 import GameDetail from "../components/GameDetail";
-
+import ripple from "../img/ripple.svg";
 // Styling and animation:
 // We transition between components and each of them have motion on them.
 // All styled components have `motion` included already.
@@ -25,6 +25,12 @@ import GameDetail from "../components/GameDetail";
 // Additionally our <GameDetail /> component makes use of the `pathId` prop.
 import styled from "styled-components";
 import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
+import {
+  popUp,
+  fadeIn,
+  sliderWrapperAnimation,
+  sliderAnimation,
+} from "../animations";
 
 import { useLocation } from "react-router-dom";
 
@@ -41,19 +47,35 @@ const Home = () => {
   const { popular, released, upcoming, searched } = useSelector(
     (state) => state.games
   );
-
   return (
-    <GameList>
-      <AnimateSharedLayout type="crossfade">
-        <AnimatePresence>
-          {/* if pathId is true we render/run the right of the expression */}
-          {pathId && <GameDetail pathId={pathId} />}
-        </AnimatePresence>
-        {searched.length ? (
-          <div className="searched">
-            <h2>Searched</h2>
+    <>
+      {popular[0] || released[0] || upcoming[0] ? (
+        <GameList variants={popUp} initial="hidden" animate="show">
+          <AnimateSharedLayout type="crossfade">
+            <AnimatePresence>
+              {/* if pathId is true we render/run the right of the expression */}
+              {pathId && <GameDetail pathId={pathId} />}
+            </AnimatePresence>
+            {searched.length ? (
+              <div className="searched">
+                <h2>Searched</h2>
+                <Games>
+                  {searched.map((game) => (
+                    <Game
+                      key={game.id}
+                      id={game.id}
+                      name={game.name}
+                      released={game.released}
+                      image={game.background_image}
+                    />
+                  ))}
+                </Games>
+              </div>
+            ) : null}
+
+            <h2>New & Upcoming</h2>
             <Games>
-              {searched.map((game) => (
+              {upcoming.map((game) => (
                 <Game
                   key={game.id}
                   id={game.id}
@@ -63,64 +85,93 @@ const Home = () => {
                 />
               ))}
             </Games>
-          </div>
-        ) : null}
-
-        <h2>New & Upcoming</h2>
-        <Games>
-          {upcoming.map((game) => (
-            <Game
-              key={game.id}
-              id={game.id}
-              name={game.name}
-              released={game.released}
-              image={game.background_image}
-            />
-          ))}
-        </Games>
-        <h2>Just Released</h2>
-        <Games>
-          {released.map((game) => (
-            <Game
-              key={game.id}
-              id={game.id}
-              name={game.name}
-              released={game.released}
-              image={game.background_image}
-            />
-          ))}
-        </Games>
-        <h2>Popular & Trending</h2>
-        <Games>
-          {popular.map((game) => (
-            <Game
-              key={game.id}
-              id={game.id}
-              name={game.name}
-              released={game.released}
-              image={game.background_image}
-            />
-          ))}
-        </Games>
-      </AnimateSharedLayout>
-    </GameList>
+            <h2>Just Released</h2>
+            <Games>
+              {released.map((game) => (
+                <Game
+                  key={game.id}
+                  id={game.id}
+                  name={game.name}
+                  released={game.released}
+                  image={game.background_image}
+                />
+              ))}
+            </Games>
+            <h2>Popular & Trending</h2>
+            <Games>
+              {popular.map((game) => (
+                <Game
+                  key={game.id}
+                  id={game.id}
+                  name={game.name}
+                  released={game.released}
+                  image={game.background_image}
+                />
+              ))}
+            </Games>
+          </AnimateSharedLayout>
+        </GameList>
+      ) : (
+        <Loading
+          variants={sliderWrapperAnimation}
+          initial="hidden"
+          animate="show"
+        >
+          <FrameO1 variants={sliderAnimation}></FrameO1>
+          <FrameO2 variants={sliderAnimation}></FrameO2>
+          <FrameO3 variants={sliderAnimation}></FrameO3>
+          <FrameO4 variants={sliderAnimation}></FrameO4>
+          <motion.img variants={fadeIn} src={ripple} />
+        </Loading>
+      )}
+    </>
   );
 };
 
 const GameList = styled(motion.div)`
-  padding: 0rem 5rem;
+  padding: 3rem 5rem;
   h2 {
-    padding: 5rem 0rem;
-    /* temp style to see redux state we destructure */
-    /* background: #00000012;  */
+    padding: 3rem 0rem;
+    text-align: start;
   }
 `;
 const Games = styled(motion.div)`
   min-height: 80vh;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
   grid-column-gap: 3rem;
   grid-row-gap: 5rem;
+`;
+
+// Frame "loading" animation
+const Loading = styled(motion.div)`
+  display: grid;
+  place-content: center center;
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+`;
+
+const FrameO1 = styled(motion.div)`
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  width: 100%;
+  height: 100vh;
+  background: hsl(214, 100%, 20%);
+  z-index: 99999;
+`;
+const FrameO2 = styled(FrameO1)`
+  background: #004299;
+`;
+const FrameO3 = styled(FrameO1)`
+  background: hsl(214, 100%, 40%);
+`;
+const FrameO4 = styled(FrameO1)`
+  background: #338bff;
 `;
 
 export default Home;

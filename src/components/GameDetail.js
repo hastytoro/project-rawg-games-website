@@ -36,9 +36,9 @@ const GameDetail = ({ pathId }) => {
     const rating = Math.floor(game.rating);
     for (let i = 1; i <= 5; i++) {
       if (i <= rating) {
-        stars.push(<img key={i} src={starFull} />);
+        stars.push(<img key={i} src={starFull} alt="" />);
       } else {
-        stars.push(<img key={i} src={starEmpty} />);
+        stars.push(<img key={i} src={starEmpty} alt="" />);
       }
     }
     return stars;
@@ -84,6 +84,7 @@ const GameDetail = ({ pathId }) => {
                     <img
                       key={data.platform.id}
                       src={getPlatform(data.platform.name)}
+                      alt=""
                     />
                   ))}
                 </Platforms>
@@ -102,7 +103,7 @@ const GameDetail = ({ pathId }) => {
               <p>{game.description_raw}</p>
             </Description>
 
-            <div className="gallery">
+            <Gallery>
               {screen.results.map((item) => (
                 <img
                   src={resizeImage(item.image, 1280)}
@@ -110,7 +111,7 @@ const GameDetail = ({ pathId }) => {
                   alt={item.image}
                 />
               ))}
-            </div>
+            </Gallery>
           </Detail>
         </CardWrapper>
       )}
@@ -127,7 +128,7 @@ const CardWrapper = styled(motion.div)`
   min-height: 100vh;
   overflow-y: scroll; /* we have fixed position */
   background: rgba(0, 0, 0, 0.5);
-  /* backdrop-filter: blur(2px); */
+  backdrop-filter: blur(2px);
   &::-webkit-scrollbar {
     width: 0.5rem;
   }
@@ -142,7 +143,7 @@ const Detail = styled(motion.div)`
   position: absolute;
   left: 10%;
   width: 80%;
-  border-radius: 1rem;
+  border-radius: 0rem;
   padding: 2rem 5rem;
   background: white;
   color: black;
@@ -187,6 +188,13 @@ const Media = styled(motion.div)`
 
 const Description = styled(motion.div)`
   margin: 5rem 0rem;
+`;
+
+const Gallery = styled(motion.div)`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-column-gap: 3rem;
+  grid-row-gap: 3rem;
 `;
 
 export default GameDetail;
